@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng kí thành viên</title>
+    <style>
+        form {
+            width: 600px;
+            margin: 0 auto;
+        }
+        /* span{
+            color: brown;
+        } */
+        span#err_age{
+            color: palevioletred;
+        }
+        span#err_name{
+            color: aquamarine;
+        }
+        span#err_phone{
+            color: greenyellow;
+        }
+        span#err_email{
+            color: rebeccapurple;
+        }
+        span#err_pass{
+            color: rgb(0, 221, 255);
+        }
+        button{
+            margin-left: 105px;
+            margin-top: 20px;
+            width: 80px;
+            height: 30px;
+            color: rgb(0, 120, 200);
+            background-color: azure;
+        }
+        button:hover{
+            color: burlywood;
+            box-shadow: red;
+            background-color: rgb(255, 213, 253);
+        }
+        td{
+            color: firebrick;
+        }
+        h1{
+            color: rgb(209, 0, 251);
+        }
+    </style>
+</head>
+<body>
+    <form action=""onsubmit = "return KiemTra()">
+        <h1>Members Sign In</h1>
+        <table>
+            <tr>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td >  Name : </td>
+                <td> <input type = "text" id = "name"></td>
+                <td><span id = "err_name"></span></td>
+            </tr>
+            <tr>
+                <td >  Email : </td>
+                <td> <input type = "text" id = "email"></td>
+                <td><span id = "err_email"></span></td>
+            </tr>
+            <tr>
+                <td > Phone number : </td>
+                <td> <input type = "text" id = "phone"></td>
+                <td><span id = "err_phone"></span></td>
+            </tr>
+            <tr>
+                <td > Password : </td>
+                <td> <input type = "password" id = "pass"></td>
+                <td><span id = "err_pass"></span></td>
+            </tr>
+            <tr>
+                <td > Age : </td>
+                <td> <input type = "text" id = "age"></td>
+                <td><span id = "err_age"></span></td>
+            </tr>
+
+        </table>
+        <button type = "submit"> Sign In </button>
+    </form>
+    <script>
+        function KiemTra(){
+            var arr = document.getElementsByTagName('input');
+            var name = arr[0].value;
+            var email = arr[1].value;
+            var phone = arr[2].value;
+            var pass = arr[3].value;
+            var age = arr[4].value;
+
+            err_name.innerHTML = '';
+            err_email.innerHTML = '';
+            err_phone.innerHTML = '';
+            err_pass.innerHTML = '';
+            err_age.innerHTML = '';
+
+            if(name === '' || email === '' || phone === '' || pass === '' || age === ''){
+                if(! name){
+                    err_name.innerHTML = 'khong duoc bo trong!'
+                }
+                if(! email){
+                    err_email.innerHTML = 'khong duoc bo trong!'
+                }
+                if(! phone){
+                    err_phone.innerHTML = 'khong duoc bo trong!'
+                }
+                if(! pass){
+                    err_pass.innerHTML = 'khong duoc bo trong!'
+                }
+                if(! age){
+                    err_age.innerHTML = 'khong duoc bo trong!'
+                }
+                return false;
+            } 
+            var regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            if( ! regexEmail.test(email)){
+                err_email.innerHTML = 'can nhap dung dinh dang email';
+                return false;
+            }
+            var regexPhone = /^[0-9\-\+]{9,15}$/;
+            if( ! regexPhone.test(phone)){
+                err_email.innerHTML = 'can nhap dung so dien thoai';
+                return false;
+            }
+            if ( isNaN(age) || age <= 0){
+                err_age.innerHTML = 'tuoi phai la so duong';
+                return false;
+            }
+            alert('thanh cong');
+            return false;
+        }
+    </script>
+</body>
+</html>

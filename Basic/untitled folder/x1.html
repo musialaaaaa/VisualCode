@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEOK RYU Clock</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgb(217, 215, 211);
+        }
+        canvas {
+            background-color: rgb(217, 215, 211);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="clockCanvas"></canvas>
+    <script>
+        const WIDTH = window.innerWidth;
+        const HEIGHT = window.innerHeight;
+        const CLOCK_RADIUS = 400;
+        const CLOCK_COLOR = 'rgb(33, 35, 57)';
+        const YELLOW_COLOR = 'rgb(196, 166, 0)';
+        const RED_COLOR = 'rgb(255, 0, 0)';
+
+        const canvas = document.getElementById('clockCanvas');
+        canvas.width = WIDTH;
+        canvas.height = HEIGHT;
+        const ctx = canvas.getContext('2d');
+
+        function polarToCartesian(r, theta) {
+            const x = r * Math.sin(Math.PI * theta / 180);
+            const y = r * Math.cos(Math.PI * theta / 180);
+            return [x + WIDTH / 2, -(y - HEIGHT / 2)];
+        }
+
+        function drawClock() {
+            ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+            // Draw outer circle
+            ctx.strokeStyle = CLOCK_COLOR;
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.arc(WIDTH / 2, HEIGHT / 2, CLOCK_RADIUS - 10, 0, Math.PI * 2);
+            ctx.stroke();
+
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const second = now.getSeconds();
+
+            // Draw hour hand
+            const [hourX, hourY] = polarToCartesian(130, (hour + minute / 60 + second / 3600) * 15);
+            ctx.strokeStyle = CLOCK_COLOR;
+            ctx.lineWidth = 14;
+            ctx.beginPath();
+            ctx.moveTo(WIDTH / 2, HEIGHT / 2);
+            ctx.lineTo(hourX, hourY);
+            ctx.stroke();
+
+            // Draw minute hand
+            const [minuteX, minuteY] = polarToCartesian(280, (minute + second / 60) * 6);
+            ctx.strokeStyle = CLOCK_COLOR;
+            ctx.lineWidth = 10;
+            ctx.beginPath();
+            ctx.moveTo(WIDTH / 2, HEIGHT / 2);
+            ctx.lineTo(minuteX, minuteY);
+            ctx.stroke();
+
+            // Draw second hand
+            const [secondX, secondY] = polarToCartesian(340, second * 6);
+            ctx.strokeStyle = YELLOW_COLOR;
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(WIDTH / 2, HEIGHT / 2);
+            ctx.lineTo(secondX, secondY);
+            ctx.stroke();
+
+            // Draw center circle
+            ctx.fillStyle = YELLOW_COLOR;
+            ctx.beginPath();
+            ctx.arc(WIDTH / 2, HEIGHT / 2, CLOCK_RADIUS - 350, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function animate() {
+            drawClock();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

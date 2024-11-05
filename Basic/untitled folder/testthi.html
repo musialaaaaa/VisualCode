@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slideshow and Password Change</title>
+    <style>
+        /* Slideshow styles */
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .anh img {
+            width: 300px;
+            height: 300px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        button {
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px 10px;
+            background-color: lightgray;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: gray;
+            margin: 10px auto;
+        }
+
+        /* Password change form styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e2d5ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            width: 650px;
+            background-color: rgb(158, 255, 226);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .form-group label {
+            flex: 0 0 180px;
+        }
+        .form-group input {
+            flex: 1;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: rgb(247, 169, 251);
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .error {
+            color: red;
+            margin-left: 10px;
+            text-align: left;
+            flex: 1;
+        }
+        h2 {
+            text-align: center;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slideshow -->
+        <div class="anh">
+            <img src="" alt="Slideshow Image">
+        </div>
+        <div class="divider"></div>
+        <div class="buttons">
+            <button class="first">First</button>
+            <button class="prev">Prev</button>
+            <button class="next">Next</button>
+            <button class="last">Last</button>
+        </div>
+    </div>
+
+    <!-- Password Change Form -->
+    <div class="form-container">
+        <h2>Đổi mật khẩu</h2>
+        <div class="form-group">
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username">
+            <div class="error" id="usernameError"></div>
+        </div>
+        <div class="form-group">
+            <label for="old-password">Mật khẩu cũ:</label>
+            <input type="text" id="old-password">
+            <div class="error" id="oldPasswordError"></div>
+        </div>
+        <div class="form-group">
+            <label for="new-password">Mật khẩu mới:</label>
+            <input type="text" id="new-password">
+            <div class="error" id="newPasswordError"></div>
+        </div>
+        <div class="form-group">
+            <label for="confirm-password">Nhập lại mật khẩu mới:</label>
+            <input type="text" id="confirm-password">
+            <div class="error" id="confirmPasswordError"></div>
+        </div>
+        <div class="form-group">
+            <button onclick="changePassword()">Đổi mật khẩu</button>
+        </div>
+    </div>
+
+    <script>
+        // Slideshow functionality
+        var imgArr = [
+            'Anh/1.jpg',
+            'Anh/2.jpg',
+            'Anh/3.jpg',
+            'Anh/4.jpg'
+        ];
+        var img = document.getElementsByTagName('img')[0];
+        img.setAttribute("src", imgArr[0]);
+        var first = document.getElementsByClassName('first')[0];
+        var prev = document.getElementsByClassName('prev')[0];
+        var next = document.getElementsByClassName('next')[0];
+        var last = document.getElementsByClassName('last')[0];
+        var i = 0;
+        var leng = imgArr.length;
+
+        first.onclick = function() {
+            i = 0;
+            img.setAttribute("src", imgArr[i]);
+        }
+        prev.onclick = function() {
+            if (i > 0) {
+                i--;
+                img.setAttribute("src", imgArr[i]);
+            } else {
+                i = leng - 1;
+                img.setAttribute("src", imgArr[i]);
+            }
+        }
+        next.onclick = function() {
+            if (i < leng - 1) {
+                i++;
+                img.setAttribute("src", imgArr[i]);
+            } else {
+                i = 0;
+                img.setAttribute("src", imgArr[i]);
+            }
+        }
+        last.onclick = function() {
+            i = leng - 1;
+            img.setAttribute("src", imgArr[i]);
+        }
+        setInterval(next.onclick, 3000);
+
+        // Password change functionality
+        function changePassword() {
+            var username = document.getElementById('username').value;
+            var oldPassword = document.getElementById('old-password').value;
+            var newPassword = document.getElementById('new-password').value;
+            var confirmPassword = document.getElementById('confirm-password').value;
+
+            var usernameError = document.getElementById('usernameError');
+            var oldPasswordError = document.getElementById('oldPasswordError');
+            var newPasswordError = document.getElementById('newPasswordError');
+            var confirmPasswordError = document.getElementById('confirmPasswordError');
+
+            // Reset error messages
+            usernameError.textContent = '';
+            oldPasswordError.textContent = '';
+            newPasswordError.textContent = '';
+            confirmPasswordError.textContent = '';
+
+            if (!username) {
+                usernameError.textContent = 'Vui lòng nhập tên đăng nhập';
+                return;
+            }
+            if (!oldPassword) {
+                oldPasswordError.textContent = 'Vui lòng nhập mật khẩu cũ';
+                return;
+            }
+            if (!newPassword) {
+                newPasswordError.textContent = 'Vui lòng nhập mật khẩu mới';
+                return;
+            }
+            if (!confirmPassword) {
+                confirmPasswordError.textContent = 'Vui lòng nhập lại mật khẩu mới';
+                return;
+            }
+
+            if (oldPassword !== '123') {
+                oldPasswordError.textContent = 'Sai mật khẩu cũ';
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                confirmPasswordError.textContent = 'Mật khẩu mới không khớp';
+                return;
+            }
+
+            alert('Đổi mật khẩu thành công');
+        }
+    </script>
+</body>         
+</html>

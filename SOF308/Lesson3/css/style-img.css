@@ -1,0 +1,35 @@
+.image-container {
+    overflow: hidden;
+    position: relative;
+}
+.img-thumbnail {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.image-container:hover .img-thumbnail {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+}
+.image-container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.4s ease;
+    opacity: 0;
+    z-index: 1;
+    border-radius: 8px;
+}
+
+.image-container:hover:before {
+    opacity: 1;
+    box-shadow: 0 0 15px 10px rgba(255, 255, 255, 0.3);
+}
+.img-thumbnail {
+    position: relative;
+    z-index: 2;
+    border-radius: 8px;
+}

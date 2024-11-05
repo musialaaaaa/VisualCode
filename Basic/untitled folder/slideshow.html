@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            width: auto ;
+            height: auto;
+            text-align: center;
+        }
+        button{
+            background-color: blue;
+            color: rgb(254, 255, 255);
+            border: none;
+            width: 55px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <img id="imgElm" src="Anh/1.jpg" alt="" width="350px">
+    <div>
+        <button onclick="first()">First</button>
+        <button onclick="last()">Last</button>
+        <button onclick="next()">Next</button>
+        <button onclick="pre()">Pre</button>
+        <button onclick="start()">Start</button>
+        <button onclick="pause()">Pause/Stop</button>
+    </div>
+</div>
+    <script>
+        let imgElm = document.getElementById('imgElm');
+        let imgArr = [];
+        let currentIndex;
+        let leng = 5;
+
+        for(let i=1; i<5; i++) {
+            imgArr.push(`Anh/${i}.jpg`);
+        }
+
+        function first() {
+            currentIndex = 0;
+            imgElm.src = imgArr[currentIndex];
+            currentIndex;
+        }
+
+        function last() {
+            currentIndex = 4;
+            imgElm.src = imgArr[currentIndex];
+        }
+        function next() {
+            if(currentIndex < 4) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            imgElm.src = imgArr[currentIndex];
+        }
+
+        function pre() {
+            if(currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = 4;
+            }
+            imgElm.src = imgArr[currentIndex];
+        }
+
+        let myInterval;
+        function start() {
+            myInterval = setInterval(next, 1500);
+        }
+        // start();
+
+        function pause() {
+            clearInterval(myInterval);
+        }
+
+        let isPlaying = false;
+        document.addEventListener('keydown', function () {
+            console.log(event);
+            if(event.key === " ") {
+                if(!isPlaying) {
+                    start();
+                } else {
+                    pause();
+                }
+                isPlaying = !isPlaying;
+            }
+        })
+
+    </script>
+</body>
+</html> 

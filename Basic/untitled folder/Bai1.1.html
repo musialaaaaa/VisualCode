@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            width: auto;
+            height: 450px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h3>Don hang</h3>
+    <form action="">
+        <div>
+            <label for="">Ma khach hang</label>
+            <input type="text" name="" id="maKhachHang">
+            <span class="error"></span>
+        </div>
+        <div>
+            <label for="">Loai hang</label>
+            <select name="" id="loaiHang">
+                <option value="" hidden>-- Chon loai</option>
+                <option value="1">Loai 1</option>
+                <option value="2">Loai 2</option>
+                <option value="3">Loai 3</option>
+            </select>
+            <span class="error"></span>
+        </div>
+        <div>
+            <label for="">Don gia</label>
+            <input type="text" name="" id="donGia" readonly>
+        </div>
+        <div>
+            <label for="">So luong</label>
+            <input type="number" name="" id="soLuong">
+            <span class="error"></span>
+        </div>
+        <div>
+            <label for="">Thanh tien</label>
+            <input type="text" name="" id="thanhTien" readonly>
+        </div>
+        <div>
+            <label for="">Noi nhan</label>
+            <input type="radio" name="" id="noiThanh">Noi thanh
+            <input type="radio" name="" id="ngoaiThanh">Ngoai thanh
+            <span class="error"></span>
+        </div>
+        <div>
+            <label for="">Phi van chuyen</label>
+            <input type="text" name="" id="phiVanChuyen" readonly>
+        </div>
+        <div>
+            <label for="">Dong goi</label>
+            <input type="checkbox" name="dongGoi" id="">Box1
+            <input type="checkbox" name="dongGoi" id="">Box2
+            <input type="checkbox" name="dongGoi" id="">Box3
+            <span class="error"></span>
+        </div>
+        <input type="button" value="Dat mua" id="submit" onclick="datMua()">
+    </div>
+    </form>
+    <script>
+        let maKhachHang = document.getElementById('maKhachHang');
+        let loaiHang = document.getElementById('loaiHang');
+        let donGia = document.getElementById('donGia');
+        let soLuong = document.getElementById('soLuong');
+        let thanhTien = document.getElementById('thanhTien');
+        let noiNhan = document.getElementsByName('noiNhan');
+        let phiVanChuyen = document.getElementById('phiVanChuyen');
+        let dongGoi = document.getElementsByName('dongGoi');
+        let error = document.getElementsByClassName('error');
+        let submit = document.getElementById('submit');
+        let noiThanh = document.getElementById('noiThanh');
+        let ngoaiThanh = document.getElementById('ngoaiThanh');
+
+        loaiHang.addEventListener('change', function () {
+            if (loaiHang.value == 1) {
+                donGia.value = 30000
+            } else if(loaiHang.value == 2){
+                donGia.value = 40000
+            } else if(loaiHang.value == 3) {
+                donGia.value = 50000
+            }
+        })
+
+        noiThanh.addEventListener('click', function () {
+            phiVanChuyen.value = 0;
+        })
+
+        ngoaiThanh.addEventListener('click', function () {
+            phiVanChuyen.value = 30000
+        })
+        function datMua() {
+            if (maKhachHang.value == 0) {
+                error[0].textContent = 'Khong duoc de trong ma kh'
+            } else {
+                error[0].textContent = ''
+            }
+
+            if (loaiHang.value == 0) {
+                error[1].textContent = 'Khong duoc de trong';
+            } else {
+                error[1].textContent = ''
+            }
+
+            if (soLuong.value == 0) {
+                error[2].textContent = 'Khong duoc de troong so luong'
+            } else if(soLuong.value <0){
+                error[2].textContent = 'So luong phai > 0'
+            }else{
+                error[2].textContent = ''
+            }
+
+            if (!noiThanh.checked && !ngoaiThanh.checked) {
+                error[3].textContent = 'Khong dc de trong'
+            } else {
+                error[3].textContent = ''
+            }
+
+            let checkbox = 0;
+            for (let i = 0; i < dongGoi.length; i++) {
+                dongGoi[i].checked;
+                if (dongGoi[i] == true) {
+                    checkbox++;
+                }                
+            }
+            if (checkbox == 0) {
+                error[4].textContent = 'Khong dc de trong';
+            }
+
+            thanhTien.value = Number(soLuong.value) * Number(donGia.value)
+            
+        } 
+
+        function kiemTraSoLuong() {
+            if (Number(soLuong.value)<0) {
+                error[2].textContent = 'So luong phai > 0'
+            }
+        }
+    </script>
+</body>
+
+</html>
